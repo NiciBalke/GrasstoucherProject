@@ -30,13 +30,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: set up node JS
+      - name: Set up Node.js
 
       - uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: install linters
+      - name: Install linters
 
         run: npm install --global eslint stylelint
       - name: Run ESLint (JS)
