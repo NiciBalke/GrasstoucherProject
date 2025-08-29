@@ -46,5 +46,12 @@ jobs:
         run: stylelint "**/*.css" || true
 
       - run: echo "linting done"
+
+  summary-job:
+    runs-on: ubuntu-latest
+
+    # collect logs from the other jobs and aggregate them here
+    steps:
+      - run: echo "coming soon"
         
     
