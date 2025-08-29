@@ -1,6 +1,9 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on: 
+  push:
+  pull_request:
+
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -16,3 +19,32 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  c-Tests:
+     runs-on: ubuntu_latest
+     steps:
+      - run: echo "coming soon"
+
+  web-Lint:
+    runs-on: ubuntu_latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: set up node JS
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: install linters
+
+        run: npm install --global eslint stylelint
+      - name: Run ESLint (JS)
+        run: eslint "**/*.js" || true
+
+      - name: Run Stylelint (CSS)
+        run: stylelint "**/*.css" || true
+
+      - run: echo "linting done"
+        
+    
