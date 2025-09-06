@@ -1,7 +1,6 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: 
-  push:
   pull_request:
 
 jobs:
@@ -54,4 +53,3 @@ jobs:
     steps:
       - run: echo "coming soon"
         
-    
