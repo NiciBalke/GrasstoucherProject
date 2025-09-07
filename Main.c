@@ -5,7 +5,7 @@
 
 int main()
 {
-    int nums[] = {1,2,4,5, 0};
+    int nums[] = {-1,-2,4,5,0};
     int l = ARRAY_LENGTH(nums);
 
     int res = SmallestMissingInt(l, nums);
