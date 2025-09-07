@@ -4,7 +4,7 @@ LIBS = -lm
 
 SRCS = *.c
 OBJS = $(SRCS:.c=.o)
-EXEC = executable
+EXEC = bin/executable
 
 all: $(EXEC)
 

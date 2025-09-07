@@ -8,7 +8,7 @@ CODE_SRCS = $(CODE_DIR)/SmallestMissingInt.c
 CODE_HDRS = $(CODE_DIR)/SmallestMissingInt.h
 
 TEST_SRCS = testMain.c
-EXEC = run_tests
+EXEC = test_bin/run_tests
 
 all: $(EXEC)
 
