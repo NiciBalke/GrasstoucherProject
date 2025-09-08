@@ -29,6 +29,9 @@ jobs:
           run: |
             curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b $HOME/.local/bin
 
+        - name: Verify reviewdog
+          run: reviewdog -version
+
 
         - name: Generate compile_commands.json
           run: |
@@ -39,7 +42,7 @@ jobs:
           env:
             REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}
           run: |
-            find . -name "*.c" | xargs clang-tidy -p . \
+            find . -name "*.c" | xargs clang-tidy -p . -quiet \
             | reviewdog -f=clang-tidy -name="clang-tidy" -reporter=github-pr-check -level=warning
 
 
