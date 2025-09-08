@@ -45,7 +45,7 @@ jobs:
 
         run: npm install --global eslint stylelint
       - name: Run ESLint (JS)
-        run: eslint "**/*.js" #|| true
+        run: eslint -c .eslintrc.json "**/*.js" #|| true
 
       - name: Run Stylelint (CSS)
         run: stylelint "**/*.css" #|| true
