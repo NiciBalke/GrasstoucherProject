@@ -21,6 +21,7 @@ clean_tests:
 test_bin:
 	mkdir -p test_bin
 
+
 run_tests: $(EXEC)
 	./$(EXEC)
 
