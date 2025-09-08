@@ -3,6 +3,11 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 
+#ifndef SMALLEST_MISSING_INT_H
+#define SMALLEST_MISSING_INT_H
+int SmallestMissingInt(int length, int array[]);
+
+#endif
 #include "../demo/SmallestMissingInt.h"
 
 void basicTest()

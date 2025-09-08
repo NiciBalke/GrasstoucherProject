@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "demo/SmallestMissingInt.c"
+#include "demo/SmallestMissingInt.h"
+#define ARRAY_LENGTH(x) (sizeof(x)/sizeof((x)[0]))
+
 
 int main()
 {
