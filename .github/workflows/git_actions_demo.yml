@@ -4,20 +4,6 @@ on:
   pull_request:
 
 jobs:
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
 
   c-Tests:
     runs-on: ubuntu-latest
@@ -28,7 +14,56 @@ jobs:
        run: sudo apt-get update && sudo apt-get install -y libcunit1-dev make gcc
 
      - name: build & run tests
-       run: make -C tests_demo run
+       run: make run_tests
+  c-Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: install dependencies
+        run: |
+            sudo apt-get update
+            sudo apt-get install -y clang-tidy libcunit1-dev gcc make curl bear
+      
+      - name: Generate compile_commands.json
+        run: bear -- make
+      
+      - name: Run clang-tidy on all C files
+        run: |
+          find . -name "*.c" -print0 | xargs -0 clang-tidy -p . -quiet
+
+
+#  c-Lint-mark-diff:
+#      runs-on: ubuntu-latest
+#      steps:
+#        - uses: actions/checkout@v3
+#
+#        - name: Install dependencies
+#          run: |
+#            sudo apt-get update
+#            sudo apt-get install -y clang-tidy libcunit1-dev gcc make curl bear
+#
+#        - name: Install reviewdog
+#          run: |
+#            curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b $HOME/.local/bin
+#
+#        - name: Verify reviewdog
+#          run: reviewdog -version
+#
+#        - name: Generate compile_commands.json
+#          run: bear -- make
+#
+#        - name: Run clang-tidy on all C files
+#          env:
+#            REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}
+#          run: |
+#            find . -name "*.c" -print0 | xargs -0 clang-tidy -p . -quiet \
+#            | reviewdog -f=efm \
+#                -efm="%f:%l:%c: %t: %m" \
+#                -name="clang-tidy" \
+#               -reporter=github-pr-check \
+#                -level=warning
+
 
   web-Lint:
     runs-on: ubuntu-latest
@@ -39,18 +74,21 @@ jobs:
 
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install linters
 
-        run: npm install --global eslint stylelint
+        run: npm install --save-dev eslint stylelint eslint-formatter-github
+
       - name: Run ESLint (JS)
-        run: eslint "**/*.js" #|| true
+        run: npx eslint "**/*.js" --format stylish #|| true
 
-      - name: Run Stylelint (CSS)
-        run: stylelint "**/*.css" #|| true
 
-      - run: echo "linting done"
+      #- name: Run Stylelint (CSS)
+      #  run: stylelint "**/*.css" #|| true
+
+      #- run: echo "linting done"
+
 
   summary-job:
     runs-on: ubuntu-latest

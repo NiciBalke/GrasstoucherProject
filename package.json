@@ -1,0 +1,23 @@
+{
+  "name": "grasstoucherproject",
+  "version": "1.0.0",
+  "description": "## Go touch grass",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NiciBalke/GrasstoucherProject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NiciBalke/GrasstoucherProject/issues"
+  },
+  "homepage": "https://github.com/NiciBalke/GrasstoucherProject#readme",
+  "devDependencies": {
+    "eslint": "^9.35.0"
+  }
+}

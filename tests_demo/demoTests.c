@@ -3,6 +3,11 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 
+#ifndef SMALLEST_MISSING_INT_H
+#define SMALLEST_MISSING_INT_H
+int SmallestMissingInt(int length, int array[]);
+
+#endif
 #include "../demo/SmallestMissingInt.h"
 
 void basicTest()
@@ -17,8 +22,8 @@ void negativeNums()
     CU_ASSERT(SmallestMissingInt(3, arr2) == 0);
 }
 
-
-void emptyArray(){
+void emptyArray()
+{
     int arr3[1];
     CU_ASSERT(SmallestMissingInt(0, arr3) == 0);
 }

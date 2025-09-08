@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define ARRAY_LENGTH(x) (sizeof(x)/sizeof((x)[0]))
+
 
 
 //return the smallest missing in from array. return length if all numbers from 0 to length-1 are present.
