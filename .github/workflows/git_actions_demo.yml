@@ -18,12 +18,14 @@ jobs:
 
 
   c-Lint:
-    runs-on: ubuntu-latest
-    steps:
+      runs-on: ubuntu-latest
+      steps:
         - uses: actions/checkout@v3
 
-        - name: Install clang-tidy
-          run: sudo apt-get update && sudo apt-get install -y clang-tidy libcunit1-dev gcc make curl
+        - name: Install dependencies
+          run: |
+            sudo apt-get update
+            sudo apt-get install -y clang-tidy libcunit1-dev gcc make curl bear
 
         - name: Install reviewdog
           run: |
@@ -32,18 +34,19 @@ jobs:
         - name: Verify reviewdog
           run: reviewdog -version
 
-
         - name: Generate compile_commands.json
-          run: |
-            sudo apt-get install -y bear
-            bear -- make
+          run: bear -- make
 
         - name: Run clang-tidy on all C files
           env:
             REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}
           run: |
             find . -name "*.c" -print0 | xargs -0 clang-tidy -p . -quiet \
-            | reviewdog -f=clang-tidy -name="clang-tidy" -reporter=github-pr-check -level=warning
+            | reviewdog -f=efm \
+                -efm="%f:%l:%c: %t: %m" \
+                -name="clang-tidy" \
+               -reporter=github-pr-check \
+                -level=warning
 
 
   web-Lint:
