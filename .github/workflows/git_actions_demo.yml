@@ -15,38 +15,54 @@ jobs:
 
      - name: build & run tests
        run: make run_tests
-
-
   c-Lint:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-        - name: Install dependencies
-          run: |
+      - name: install dependencies
+        run: |
             sudo apt-get update
             sudo apt-get install -y clang-tidy libcunit1-dev gcc make curl bear
+      
+      - name: Generate compile_commands.json
+        run: bear -- make
+      
+      - name: Run clang-tidy on all C files
+        run: |
+          find . -name "*.c" -print0 | xargs -0 clang-tidy -p . -quiet
 
-        - name: Install reviewdog
-          run: |
-            curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b $HOME/.local/bin
 
-        - name: Verify reviewdog
-          run: reviewdog -version
-
-        - name: Generate compile_commands.json
-          run: bear -- make
-
-        - name: Run clang-tidy on all C files
-          env:
-            REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}
-          run: |
-            find . -name "*.c" -print0 | xargs -0 clang-tidy -p . -quiet \
-            | reviewdog -f=efm \
-                -efm="%f:%l:%c: %t: %m" \
-                -name="clang-tidy" \
-               -reporter=github-pr-check \
-                -level=warning
+#  c-Lint-mark-diff:
+#      runs-on: ubuntu-latest
+#      steps:
+#        - uses: actions/checkout@v3
+#
+#        - name: Install dependencies
+#          run: |
+#            sudo apt-get update
+#            sudo apt-get install -y clang-tidy libcunit1-dev gcc make curl bear
+#
+#        - name: Install reviewdog
+#          run: |
+#            curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s -- -b $HOME/.local/bin
+#
+#        - name: Verify reviewdog
+#          run: reviewdog -version
+#
+#        - name: Generate compile_commands.json
+#          run: bear -- make
+#
+#        - name: Run clang-tidy on all C files
+#          env:
+#            REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}
+#          run: |
+#            find . -name "*.c" -print0 | xargs -0 clang-tidy -p . -quiet \
+#            | reviewdog -f=efm \
+#                -efm="%f:%l:%c: %t: %m" \
+#                -name="clang-tidy" \
+#               -reporter=github-pr-check \
+#                -level=warning
 
 
   web-Lint:
