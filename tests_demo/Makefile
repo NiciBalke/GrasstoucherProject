@@ -12,7 +12,7 @@ EXEC = test_bin/run_tests
 
 all: $(EXEC)
 
-$(EXEC): $(TEST_SRCS) $(CODE_SRCS) $(CODE_HDRS)
+$(EXEC): $(TEST_SRCS) $(CODE_SRCS) $(CODE_HDRS) | test_bin
 	$(CC) $(CFLAGS) -o $(EXEC) $(TEST_SRCS) $(CODE_SRCS) $(LIBS)
 
 clean:
