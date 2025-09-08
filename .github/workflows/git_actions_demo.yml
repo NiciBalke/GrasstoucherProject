@@ -44,7 +44,7 @@ jobs:
           eslint-args: '--ignore-path=.gitignore --quiet'
           extensions: 'js,jsx,ts,tsx'
           annotations: true
-          
+
 
   web-Lint:
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
 
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install linters
 
