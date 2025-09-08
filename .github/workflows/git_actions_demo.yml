@@ -14,7 +14,7 @@ jobs:
        run: sudo apt-get update && sudo apt-get install -y libcunit1-dev make gcc
 
      - name: build & run tests
-       run: make -C tests_demo run
+       run: make -C run_tests
 
 
   c-Lint:
@@ -48,7 +48,7 @@ jobs:
         run: npm install --save-dev eslint stylelint eslint-formatter-github
 
       - name: Run ESLint (JS)
-        run: npx eslint "**/*.js" --format compact #|| true
+        run: npx eslint "**/*.js" --format stylish #|| true
 
 
       - name: Run Stylelint (CSS)
