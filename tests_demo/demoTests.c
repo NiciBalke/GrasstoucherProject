@@ -14,11 +14,11 @@ void basicTest()
 void negativeNums()
 {
     int arr2[] = {-1, -2, -3};
-    CU_ASSERT(SmallestMissingInt(3, arr2) == 0);
+    CU_ASSERT(SmallestMissingInt(3, arr2) == -1);
 }
 
-
-void emptyArray(){
+void emptyArray()
+{
     int arr3[1];
     CU_ASSERT(SmallestMissingInt(0, arr3) == 0);
 }
