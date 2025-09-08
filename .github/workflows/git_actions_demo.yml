@@ -43,7 +43,7 @@ jobs:
 
       - name: Install linters
 
-        run: npm install --global eslint stylelint
+        run: npm install --save-dev eslint stylelint
 
       - name: Run ESLint (JS)
         run: npx eslint "**/*.js" #|| true
