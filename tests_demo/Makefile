@@ -18,6 +18,9 @@ $(EXEC): $(TEST_SRCS) $(CODE_SRCS) $(CODE_HDRS)
 clean:
 	rm -f $(EXEC) *.o
 
+test_bin:
+	mkdir -p test_bin
+
 run: $(EXEC)
 	./$(EXEC)
 
