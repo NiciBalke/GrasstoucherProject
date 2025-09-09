@@ -8,7 +8,7 @@ jobs:
   c-Tests:
     runs-on: ubuntu-latest
     steps:
-     - uses: actions/checkout@v3
+     - uses: actions/checkout@v4
 
      - name: install CUnit
        run: sudo apt-get update && sudo apt-get install -y libcunit1-dev make gcc
@@ -20,12 +20,12 @@ jobs:
   c-Lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: install dependencies
         run: |
             sudo apt-get update
-            sudo apt-get install -y clang-tidy libcunit1-dev gcc make curl bear
+            sudo apt-get install -y clang-tidy libcunit1-dev gcc make bear
       
       - name: Generate compile_commands.json
         run: bear -- make
@@ -44,7 +44,7 @@ jobs:
       - name: Install clang-tidy
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang-tidy build-essential cmake bear make
+          sudo apt-get install -y clang-tidy build-essential cmake bear make libcunit1 gcc
 
       # Register the problem matcher
       - name: Register clang-tidy matcher
@@ -96,11 +96,11 @@ jobs:
   web-Lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js
 
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
