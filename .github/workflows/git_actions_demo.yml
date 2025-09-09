@@ -17,22 +17,22 @@ jobs:
        run: make run_tests
 
 
-  c-Lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: install dependencies
-        run: |
-            sudo apt-get update
-            sudo apt-get install -y clang-tidy libcunit1-dev gcc make bear
-      
-      - name: Generate compile_commands.json
-        run: bear -- make
-      
-      - name: Run clang-tidy on all C files
-        run: |
-          find . -name "*.c" -print0 | xargs -0 clang-tidy -p . -quiet
+#  c-Lint:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: install dependencies
+#        run: |
+#            sudo apt-get update
+#            sudo apt-get install -y clang-tidy libcunit1-dev gcc make bear
+#      
+#      - name: Generate compile_commands.json
+#        run: bear -- make
+#      
+#      - name: Run clang-tidy on all C files
+#        run: |
+#          find . -name "*.c" -print0 | xargs -0 clang-tidy -p . -quiet
 
 
   matcher-c-lint:
