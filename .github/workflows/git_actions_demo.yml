@@ -44,7 +44,7 @@ jobs:
       - name: Install clang-tidy
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang-tidy build-essential cmake bear make libcunit1 gcc
+          sudo apt-get install -y clang-tidy build-essential cmake bear make libcunit1-dev gcc
 
       # Register the problem matcher
       - name: Register clang-tidy matcher
@@ -64,7 +64,7 @@ jobs:
 #  c-Lint-mark-diff:
 #      runs-on: ubuntu-latest
 #      steps:
-#        - uses: actions/checkout@v3
+#        - uses: actions/checkout@v4
 #
 #        - name: Install dependencies
 #          run: |
