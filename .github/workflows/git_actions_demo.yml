@@ -8,35 +8,61 @@ jobs:
   c-Tests:
     runs-on: ubuntu-latest
     steps:
-     - uses: actions/checkout@v3
+     - uses: actions/checkout@v4
 
      - name: install CUnit
        run: sudo apt-get update && sudo apt-get install -y libcunit1-dev make gcc
 
      - name: build & run tests
        run: make run_tests
-  c-Lint:
+
+
+#  c-Lint:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: install dependencies
+#        run: |
+#            sudo apt-get update
+#            sudo apt-get install -y clang-tidy libcunit1-dev gcc make bear
+#      
+#      - name: Generate compile_commands.json
+#        run: bear -- make
+#      
+#      - name: Run clang-tidy on all C files
+#        run: |
+#          find . -name "*.c" -print0 | xargs -0 clang-tidy -p . -quiet
+
+
+  matcher-c-lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: install dependencies
+      # Install clang-tidy and dependencies
+      - name: Install clang-tidy
         run: |
-            sudo apt-get update
-            sudo apt-get install -y clang-tidy libcunit1-dev gcc make curl bear
-      
+          sudo apt-get update
+          sudo apt-get install -y clang-tidy build-essential cmake bear make libcunit1-dev gcc
+
+      # Register the problem matcher
+      - name: Register clang-tidy matcher
+        run: echo "::add-matcher::.github/matchers/clang-tidy.json"
+
       - name: Generate compile_commands.json
         run: bear -- make
-      
-      - name: Run clang-tidy on all C files
+
+      # Run clang-tidy on all C/C++ files
+      - name: Run clang-tidy
         run: |
-          find . -name "*.c" -print0 | xargs -0 clang-tidy -p . -quiet
+          clang-tidy $(find . -name '*.c' -o -name '*.cpp') -- -std=c11
 
 
 #  c-Lint-mark-diff:
 #      runs-on: ubuntu-latest
 #      steps:
-#        - uses: actions/checkout@v3
+#        - uses: actions/checkout@v4
 #
 #        - name: Install dependencies
 #          run: |
@@ -68,11 +94,11 @@ jobs:
   web-Lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js
 
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
