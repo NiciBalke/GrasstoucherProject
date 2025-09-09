@@ -56,8 +56,6 @@ jobs:
       # Run clang-tidy on all C/C++ files
       - name: Run clang-tidy
         run: |
-          # Usually clang-tidy is run with compile_commands.json (from CMake)
-          # For a simple example, we'll just run on all .c/.cpp files:
           clang-tidy $(find . -name '*.c' -o -name '*.cpp') -- -std=c11
 
 

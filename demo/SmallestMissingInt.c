@@ -7,6 +7,7 @@
 //return the smallest missing in from array. return length if all numbers from 0 to length-1 are present.
 int SmallestMissingInt(int length, int array[]){
     int copy[length];
+    int linterShouldSeeThis = 10;
 
 
     for(int k=0;k<length;k++) copy[k] = 0; // delete garbage values
